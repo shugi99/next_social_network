@@ -5,10 +5,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDataAPI } from '@utils/fetchData'
 import { GLOBALTYPES } from '@context/store/actions/globalTypes'
 import UserCard from '@components/user-card'
+import Loading from '@components/alert/loading'
 
 const Search = () => {
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -29,6 +31,18 @@ const Search = () => {
     setSearch('')
     setUsers('')
   }
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    if (!search) return
+    try {
+      setLoading(true)
+      const res = getDataAPI(`search?username=${search}`, auth.token)
+      setUsers(res.data.users)
+      setLoading(false)
+    } catch (error) {
+      dispatch({ type: GLOBALTYPES.ALERT, paylod: { error: err.response.data.msg } })
+    }
+  }
   return (
     <div className="flex items-center justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
       <div className="w-full max-w-lg lg:max-w-xs">
@@ -48,6 +62,7 @@ const Search = () => {
             value={search || ''}
             onChange={(e) => setSearch(e.target.value.toLowerCase().replace(/ /g, ''))}
           />
+
           {search && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={handleClose}>
               <XIcon className="w-4 h-4 text-gray-400" aria-hidden="true" />
@@ -57,8 +72,8 @@ const Search = () => {
             <div className="flex flex-col">
               {search &&
                 users.map((user) => (
-                  <Link key={user._id} href={`/profile/${user._id}`} onClick={handleClose}>
-                    <a>
+                  <Link key={user._id} href={`/profile/${user._id}`}>
+                    <a onClick={handleClose}>
                       <UserCard user={user} border="true" />
                     </a>
                   </Link>

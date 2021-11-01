@@ -165,30 +165,20 @@ export default function Header() {
           <Disclosure.Panel className="lg:hidden">
             <div className="pt-2 pb-3 space-y-1">
               {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800" */}
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-base font-medium text-indigo-700 border-l-4 border-indigo-500 bg-indigo-50"
-              >
-                Dashboard
-              </a>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-              >
-                Team
-              </a>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-              >
-                Projects
-              </a>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
-              >
-                Calendar
-              </a>
+
+              {menu.map((value, key) => {
+                return (
+                  <Link href={value.url} key={key}>
+                    <a
+                      className={`${
+                        router.pathname === value.url ? 'text-indigo-700 border-l-4 border-indigo-500 bg-indigo-50' : ''
+                      }    block py-2 pl-3 pr-4 text-base font-medium text-gray-600 border-l-4 border-transparent hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800`}
+                    >
+                      <span>{value.caption}</span>
+                    </a>
+                  </Link>
+                )
+              })}
             </div>
             <div className="pt-4 pb-3 border-t border-gray-200">
               <div className="flex items-center px-4">
@@ -206,7 +196,7 @@ export default function Header() {
                   <BellIcon className="w-6 h-6" aria-hidden="true" />
                 </button>
               </div>
-              <div className="mt-3 space-y-1">
+              <div className="w-full mt-3 space-y-1">
                 <a
                   href="#"
                   className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
@@ -219,12 +209,15 @@ export default function Header() {
                 >
                   Settings
                 </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                <button
+                  // type="submit"
+                  className={classNames(
+                    'block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100'
+                  )}
+                  onClick={() => dispatch(logout())}
                 >
                   Sign out
-                </a>
+                </button>
               </div>
             </div>
           </Disclosure.Panel>

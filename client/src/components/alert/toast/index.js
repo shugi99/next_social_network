@@ -18,7 +18,7 @@ const Toast = ({ msg, handleShow }) => {
       {/* Global notification live region, render this permanently at the end of the document */}
       <div
         aria-live="assertive"
-        className="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
+        className="fixed inset-0 z-50 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
       >
         <div className="flex flex-col items-center w-full space-y-4 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
@@ -33,7 +33,7 @@ const Toast = ({ msg, handleShow }) => {
             leaveTo="opacity-0"
           >
             <div
-              className={`${textColor} ${borderColor} w-full max-w-sm overflow-hidden  border-2  rounded-lg shadow-lg pointer-events-auto 2xl:mt-16 2xl:mr-36 ring-1 ring-black ring-opacity-5`}
+              className={`${textColor} ${borderColor} bg-white w-full max-w-sm overflow-hidden  border-2  rounded-lg shadow-lg pointer-events-auto 2xl:mt-16 2xl:mr-36 ring-1 ring-black ring-opacity-5`}
             >
               <div className="p-4">
                 <div className="flex items-start">
