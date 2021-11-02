@@ -1,24 +1,25 @@
 import Avatar from '@components/avatar'
 import { getProfileUsers } from '@context/store/actions/profileAction'
-import { CogIcon, MailIcon, PhoneIcon } from '@heroicons/react/outline'
+import { CogIcon, MailIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/outline'
 import { get } from 'mongoose'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import EditProfile from '../edit-profile'
+import Follow from './follow-user'
 
 const Info = ({ id }) => {
   const { auth, profile } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   const [userData, setUserData] = useState([])
-  const [onEdit, setOnEdit] = useState(true)
+  const [onEdit, setOnEdit] = useState(false)
 
   useEffect(() => {
-    if (id === auth.user._id) {
+    if (id === auth?.user._id) {
       setUserData([auth.user])
     } else {
       dispatch(getProfileUsers({ users: profile.users, id, auth }))
-      const newData = profile.users.filter((user) => user._id === id)
+      const newData = profile.users.filter((user) => user?._id === id)
       setUserData(newData)
     }
   }, [id, auth.user, profile.users])
@@ -48,35 +49,35 @@ const Info = ({ id }) => {
                       <MailIcon className="w-5 h-5 mr-2 -ml-1 text-gray-400" aria-hidden="true" />
                       <span>Message</span>
                     </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-                      onClick={() => setOnEdit(true)}
-                    >
-                      <CogIcon className="w-5 h-5 mr-2 -ml-1 text-gray-400" aria-hidden="true" />
-                      <span>Edit Profile</span>
-                    </button>
+                    {user._id === auth.user._id ? (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        onClick={() => setOnEdit(true)}
+                      >
+                        <CogIcon className="w-5 h-5 mr-2 -ml-1 text-gray-400" aria-hidden="true" />
+                        <span>Edit Profile</span>
+                      </button>
+                    ) : (
+                      <Follow user={user} />
+                    )}
                   </div>
                 </div>
               </div>
               {onEdit && <EditProfile user={user} setOnEdit={setOnEdit} onEdit={onEdit} />}
               <div className="flex-1 hidden min-w-0 mt-6 sm:block 2xl:hidden">
-                <h1 className="text-2xl font-bold text-gray-900 truncate">name</h1>
+                <h1 className="text-2xl font-bold text-gray-900 truncate">{user.fullname}</h1>
               </div>
 
               <div className="max-w-5xl px-4 mx-auto mt-6 sm:px-6 lg:px-8">
-                <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-500">{user.username}</dt>
-                    <div className="flex pb-1 2xl:w-1/2">
-                      <dd className="w-1/2 mt-1 text-sm font-medium text-gray-500 underline">
-                        {user.followers.length} Followers
-                      </dd>
-                      <dd className="w-1/2 mt-1 text-sm font-medium text-gray-500 underline">
-                        {user.following.length}Following{' '}
-                      </dd>
+                <dl className="grid grid-cols-1 text-sm font-medium gap-x-4 gap-y-8 sm:grid-cols-2">
+                  <div className=" sm:col-span-1">
+                    <dt className="text-gray-500 ">{user.username}</dt>
+                    <div className="flex pb-1 text-indigo-400 2xl:w-1/2">
+                      <dd className="w-1/2 mt-1 ">{user.followers.length}&nbsp;&nbsp;Followers</dd>
+                      <dd className="w-1/2 mt-1 ">{user.following.length}&nbsp;&nbsp;Following </dd>
                     </div>
-                    <dt className="mt-1 text-sm font-medium text-gray-500">{user.email}</dt>
+                    <dt className="mt-1 text-gray-500">{user.email}</dt>
                     {/* <a href={user.website} target="_blank" rel="noreferrer">
                       {user.website}
                     </a> */}

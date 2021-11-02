@@ -12,20 +12,17 @@ export const checkImage = (file) => {
 }
 
 export const imageUpload = async (images) => {
+  console.log(images, 'image')
   let imgArr = []
   for (const item of images) {
     const formData = new FormData()
 
-    if (item.camera) {
-      formData.append('file', item.camera)
-    } else {
-      formData.append('file', item)
-    }
+    formData.append('file', item)
 
-    formData.append('upload_preset', 'efxjficn')
-    formData.append('cloud_name', 'devat-channel')
+    formData.append('upload_preset', 'ssheepax')
+    formData.append('cloud_name', 'dybmlbceb')
 
-    const res = await fetch('https://api.cloudinary.com/v1_1/devat-channel/upload', {
+    const res = await fetch('https://api.cloudinary.com/v1_1/dybmlbceb/image/upload', {
       method: 'POST',
       body: formData,
     })

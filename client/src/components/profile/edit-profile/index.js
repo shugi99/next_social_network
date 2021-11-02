@@ -1,6 +1,8 @@
+import { GLOBALTYPES } from '@context/store/actions/globalTypes'
+import { updateProfileUser } from '@context/store/actions/profileAction'
 import { checkImage } from '@utils/imageUpload'
-import React, { useState, Fragment } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, Fragment, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const EditProfile = ({ setOnEdit, onEdit }) => {
   const [userData, setUserData] = useState({
@@ -12,28 +14,44 @@ const EditProfile = ({ setOnEdit, onEdit }) => {
     gender: '',
   })
   const { fullname, mobile, address, website, story, gender } = userData
+  const dispatch = useDispatch()
 
   const [avatar, setAvatar] = useState('')
   const { auth } = useSelector((state) => state)
+
+  const changeAvatar = (e) => {
+    const file = e.target.files[0]
+
+    const err = checkImage(file)
+    if (err)
+      return dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err },
+      })
+
+    setAvatar(file)
+  }
 
   const handleInput = (e) => {
     const { name, value } = e.target
     setUserData({ ...userData, [name]: value })
   }
-  const changeAvatar = (e) => {
-    const file = e.target.files[0]
-    const err = checkImage(file)
-    if (err) return
-    setAvatar(file)
-    console.log(avatar)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(updateProfileUser({ userData, avatar, auth }))
   }
+
+  useEffect(() => {
+    setUserData(auth.user)
+  }, [])
 
   return (
     <main className="fixed top-0 left-0 z-50 w-full h-full overflow-auto bg-indigo-100 bg-opacity-80 pt-60 ">
       <div className="max-w-screen-xl px-4 pb-6 mx-auto sm:px-6 lg:pb-16 lg:px-8 ">
         <div className="overflow-hidden bg-white rounded-lg shadow">
           <div className="divide-y divide-gray-200 lg:grid lg:divide-y-0 lg:divide-x">
-            <form className="divide-y divide-gray-200 lg:col-span-9">
+            <form className="divide-y divide-gray-200 lg:col-span-9" onSubmit={handleSubmit}>
               {/* Profile section */}
               <div className="px-4 py-6 sm:p-6 lg:pb-8">
                 <div>
