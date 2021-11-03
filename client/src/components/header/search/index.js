@@ -73,8 +73,8 @@ const Search = () => {
               {search &&
                 users.map((user) => (
                   <Link key={user._id} href={`/profile/${user._id}`}>
-                    <a onClick={handleClose}>
-                      <UserCard user={user} border="true" />
+                    <a>
+                      <UserCard key={user._id} user={user} border="true" handleClose={handleClose} />
                     </a>
                   </Link>
                 ))}
