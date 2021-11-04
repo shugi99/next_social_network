@@ -19,3 +19,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+video {
+  min-width: 100%;
+min-height: 100%;
+}
+::-webkit-file-upload-button { cursor:pointer; }
