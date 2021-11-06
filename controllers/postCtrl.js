@@ -10,10 +10,49 @@ const postCtrl = {
       const newPost = new Posts({
         content,
         images,
+        user: req.user._id,
       })
       await newPost.save()
       res.json({ msg: 'Create Post', newPost })
     } catch (err) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
+  getPosts: async (req, res) => {
+    try {
+      const posts = await Posts.find({ user: [...req.user.following, req.user._id] })
+        .sort('-createdAt')
+        .populate('user likes', 'avatar username fullname')
+      res.json({
+        msg: 'Success!',
+        result: posts.length,
+        posts,
+      })
+    } catch (error) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
+  updatePost: async (req, res) => {
+    console.log('aw')
+    try {
+      const { content, images } = req.body
+      const post = await Posts.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          content,
+          images,
+        }
+      ).populate('user likes', 'avatar username fullname')
+
+      res.json({
+        msg: 'Post updated',
+        newPost: {
+          ...post._doc,
+          content,
+          images,
+        },
+      })
+    } catch (error) {
       return res.status(500).json({ msg: err.message })
     }
   },

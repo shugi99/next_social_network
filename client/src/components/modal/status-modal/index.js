@@ -1,16 +1,17 @@
 import { GLOBALTYPES } from '@context/store/actions/globalTypes'
-import { createPost } from '@context/store/actions/postAction'
+import { createPost, updatePost } from '@context/store/actions/postAction'
 import { CameraIcon, PhotographIcon, XIcon } from '@heroicons/react/outline'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const StatusModal = () => {
-  const { auth } = useSelector((state) => state)
+  const { auth, status } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   const [content, setContent] = useState('')
   const [images, setImages] = useState([])
   const [stream, setStream] = useState(false)
+  const inputRef = useRef()
 
   const videoRef = useRef()
   const canvasRef = useRef()
@@ -33,6 +34,10 @@ const StatusModal = () => {
 
     if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } })
     setImages([...images, ...newImages])
+  }
+
+  const focus = () => {
+    inputRef.current.focus
   }
 
   const deleteImages = (index) => {
@@ -77,13 +82,25 @@ const StatusModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     // if (images.length === 0) return dispatch({ type: GLOBALTYPES.ALERT, payload: { error: 'Please add your photo' } })
-    dispatch(createPost({ content, images, auth }))
+    if (status.onEdit) {
+      dispatch(updatePost({ content, images, auth, status }))
+    } else {
+      dispatch(createPost({ content, images, auth }))
+    }
 
     setContent('')
     setImages([])
     if (tracks) tracks.stop()
     dispatch({ type: GLOBALTYPES.STATUS, payload: false })
   }
+
+  useEffect(() => {
+    if (status.onEdit) {
+      setContent(status.content)
+      setImages(status.images)
+    }
+    console.log(content)
+  }, [])
   return (
     <div className="fixed top-0 left-0 z-20 w-full h-full overflow-auto bg-indigo-100 bg-opacity-40 pt-60 ">
       <div className="relative p-4 px-6  w-full max-w-[450px] mx-auto font-medium text-gray-500 bg-white border-2 border-gray-200 shadow-md rounded-2xl">
@@ -95,6 +112,7 @@ const StatusModal = () => {
             className="min-h-[150px] w-full p-1 px-5 bg-gray-100 rounded-lg focus:outline-none"
             placeholder={`${auth.user.username}, what are you thinking?`}
             onChange={(e) => setContent(e.target.value)}
+            value={content}
           />
 
           <div className="w-100 max-h-[250px] overflow-y-auto flex flex-wrap place-items-center pt-6">
@@ -102,7 +120,7 @@ const StatusModal = () => {
               images.map((img, index) => (
                 <div key={index} id="file_img" className="relative w-1/3 p-1 h-28 border-1 ">
                   <img
-                    src={img.camera ? img.camera : URL.createObjectURL(img)}
+                    src={img.camera ? img.camera : images.url ? img.url : URL.createObjectURL(img)}
                     alt="images"
                     className="block object-cover w-full h-full"
                   />
@@ -152,8 +170,11 @@ const StatusModal = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 text-sm font-medium text-white bg-indigo-700 border border-transparent rounded-md shadow-sm py-my-2 px-22 flex-grow-1 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className={`${
+              content ? 'hover:bg-indigo-800 bg-indigo-700' : 'bg-gray-400'
+            } w-full py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm py-my-2 px-22 flex-grow-1  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             onClick={handleSubmit}
+            disabled={content ? false : true}
           >
             Post
           </button>
