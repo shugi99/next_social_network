@@ -11,7 +11,7 @@ const Profile = () => {
     <div>
       {profile.loading && <Loading />}
       <Info />
-      <Posts />
+      {/* <Posts /> */}
     </div>
   )
 }

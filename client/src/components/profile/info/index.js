@@ -31,15 +31,21 @@ const Info = () => {
       setUserData(newData)
     }
   }, [id, auth.user, profile.users])
+
+  useEffect(() => {
+    if (showFollowers || showFollowing || onEdit) {
+      dispatch({ type: GLOBALTYPES.MODAL, payload: true })
+    } else {
+      dispatch({ type: GLOBALTYPES.MODAL, payload: false })
+    }
+  }, [showFollowers, showFollowing, onEdit, dispatch])
   return (
     <div>
-      {' '}
       {userData.map((user, key) => (
         <div key={key}>
           <div>
-            <div>
-              <div className="object-cover w-full h-32 bg-indigo-100 lg:h-26" alt="" />
-            </div>
+            <div className="object-cover w-full h-32 mt-12 bg-indigo-100 lg:h-26" alt="" />
+
             <div className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
               <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div className="flex">

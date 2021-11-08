@@ -15,19 +15,25 @@ function classNames(...classes) {
 }
 
 export default function Header() {
-  const router = useRouter()
   const { auth } = useSelector((state) => state)
+  const router = useRouter()
   const menu = auth.token ? header_menu_logged_in : header_menu
   const dispatch = useDispatch()
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="fixed top-0 z-40 w-full bg-white shadow ">
       {({ open }) => (
         <>
           <div className="px-2 mx-auto max-w-7xl sm:px-4 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex px-2 lg:px-0">
-                {/* <div className="flex items-center flex-shrink-0">
+                <div
+                  className="flex items-center flex-shrink-0 cursor-pointer"
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                    router.push('/')
+                  }}
+                >
                   <img
                     className="block w-auto h-8 lg:hidden"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
@@ -38,8 +44,8 @@ export default function Header() {
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
                     alt="Workflow"
                   />
-                </div> */}
-                <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+                </div>
+                <div className="hidden lg:ml-16 lg:flex lg:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                   {/* {menu.map((value, key) => {
                     return (

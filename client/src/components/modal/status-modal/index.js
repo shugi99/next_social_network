@@ -102,7 +102,7 @@ const StatusModal = () => {
     console.log(content)
   }, [])
   return (
-    <div className="fixed top-0 left-0 z-20 w-full h-full overflow-auto bg-indigo-100 bg-opacity-40 pt-60 ">
+    <div className="fixed top-0 left-0 z-50 w-full h-full overflow-auto bg-indigo-100 bg-opacity-40 pt-60 ">
       <div className="relative p-4 px-6  w-full max-w-[450px] mx-auto font-medium text-gray-500 bg-white border-2 border-gray-200 shadow-md rounded-2xl">
         <h1 className="pb-2 text-xl font-semibold">Create Post</h1>
         <form className="flex-col " onSubmit={handleSubmit}>

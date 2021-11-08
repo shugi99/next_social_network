@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Header from '@components/header'
 
 const Init = ({ children }) => {
-  const { auth } = useSelector((state) => state)
+  const { auth, modal, status } = useSelector((state) => state)
   const router = useRouter()
 
   const dispatch = useDispatch()
@@ -14,16 +14,17 @@ const Init = ({ children }) => {
     dispatch(refreshToken())
   }, [dispatch])
 
+  useEffect(() => {})
   useEffect(() => {
     if (auth.token) {
       router.push('/')
     }
   }, [auth.token])
   return (
-    <>
+    <div className={`${status || modal} && mode`}>
       {/* {auth.token && <Header />} */}
       {children}
-    </>
+    </div>
   )
 }
 

@@ -1,13 +1,44 @@
 import { BookmarkIcon, ChatIcon, HeartIcon, PaperAirplaneIcon } from '@heroicons/react/outline'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Like from '@components/like'
+import { useDispatch, useSelector } from 'react-redux'
+import { likePost, unLikePost } from '@context/store/actions/postAction'
 
 const CardFooter = ({ post }) => {
+  const [like, setLike] = useState(false)
+  const [loadLike, setLoadLike] = useState(false)
+
+  const { auth } = useSelector((state) => state)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (post.likes.find((like) => like._id === auth.user._id)) {
+      setLike(true)
+    }
+  }, [post.like, auth.user._id])
+
+  const handleLike = async () => {
+    if (loadLike) return
+    setLike(true)
+    setLoadLike(true)
+    await dispatch(likePost({ post, auth }))
+    setLoadLike(false)
+  }
+
+  const handleUnlike = async () => {
+    if (loadLike) return
+    setLike(false)
+    setLoadLike(true)
+    await dispatch(unLikePost({ post, auth }))
+    setLoadLike(false)
+  }
+
   return (
     <div className="p-4 ">
       <div className="flex justify-between w-full ">
         <div className="flex">
-          <HeartIcon className="w-6 h-6" />
+          <Like like={like} handleLike={handleLike} handleUnlike={handleUnlike} />
           <Link href={`/post/${post._id}`}>
             <a>
               <ChatIcon className="w-6 h-6" />

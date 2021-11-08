@@ -22,7 +22,7 @@ const CardHeader = ({ post }) => {
     <div className="flex p-4 space-x-4 ">
       <Link href={`/profile/${post.user._id}`}>
         <a>
-          <Avatar src={post.user?.avatar} className="w-10 h-10 rounded-full cursor-pointer " />
+          <Avatar src={post.user.avatar} className="w-10 h-10 rounded-full cursor-pointer " />
         </a>
       </Link>
       <div className="flex flex-col">
