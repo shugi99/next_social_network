@@ -35,7 +35,7 @@ const CardFooter = ({ post }) => {
   }
 
   return (
-    <div className="p-4 ">
+    <div className="px-4 pt-4">
       <div className="flex justify-between w-full ">
         <div className="flex">
           <Like like={like} handleLike={handleLike} handleUnlike={handleUnlike} />
@@ -49,7 +49,7 @@ const CardFooter = ({ post }) => {
         <BookmarkIcon className="w-6 h-6" />
       </div>
       <div className="flex justify-between pt-2">
-        <h6 className="cursor-pointer">{post.likes.length}</h6>
+        <h6 className="cursor-pointer">{post.likes.length} likes</h6>
         <h6 className="cursor-pointer">{post.comments.length} comments</h6>
       </div>
     </div>

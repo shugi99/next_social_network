@@ -1,4 +1,5 @@
 import Avatar from '@components/avatar'
+import { GLOBALTYPES } from '@context/store/actions/globalTypes'
 import { getProfileUsers } from '@context/store/actions/profileAction'
 import { CogIcon, MailIcon, PhoneIcon, UserAddIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'

@@ -14,7 +14,13 @@ const index = () => {
   }, [dispatch, auth.token])
   return (
     <div>
-      {homePosts.loading ? <Loading /> : homePosts.result === 0 ? <h2 className="text-center"></h2> : <Posts />}
+      {homePosts.loading ? (
+        <Loading />
+      ) : homePosts.result === 0 ? (
+        <p className="py-8 text-center text-gray-500">No Posts to show</p>
+      ) : (
+        <Posts />
+      )}
     </div>
   )
 }
