@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Follow = ({ user }) => {
-  console.log(user)
   const [followed, setFollowed] = useState(false)
   const [load, setLoad] = useState(false)
 
@@ -30,7 +29,6 @@ const Follow = ({ user }) => {
 
   useEffect(() => {
     if (auth.user.following.find((item) => item._id === user._id)) {
-      console.log(true)
       setFollowed(true)
     }
   }, [auth.user.following])

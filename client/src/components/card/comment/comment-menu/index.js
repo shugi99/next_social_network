@@ -2,9 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { DotsVerticalIcon, DuplicateIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline'
 import React, { Fragment } from 'react'
 
-const CommentMenu = ({ post, comment, auth }) => {
-  console.log()
-  const handleEditPost = () => {}
+const CommentMenu = ({ post, comment, auth, setOnEdit }) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -19,7 +17,7 @@ const CommentMenu = ({ post, comment, auth }) => {
                 active ? 'bg-gray-100' : '',
                 'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex z-50  '
               )}
-              // onClick={handleEditPost}
+              onClick={() => setOnEdit(true)}
             >
               {' '}
               <PencilIcon className="w-6 h-6 mr-2 " />
@@ -34,6 +32,7 @@ const CommentMenu = ({ post, comment, auth }) => {
                 active ? 'bg-gray-100' : '',
                 'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex '
               )}
+              // onClick={setOnEdit(false)}
             >
               {' '}
               <TrashIcon className="w-6 h-6 mr-2 " />

@@ -99,7 +99,6 @@ const StatusModal = () => {
       setContent(status.content)
       setImages(status.images)
     }
-    console.log(content)
   }, [])
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-full overflow-auto bg-indigo-100 bg-opacity-40 pt-60 ">
