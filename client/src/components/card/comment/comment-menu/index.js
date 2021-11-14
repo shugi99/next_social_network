@@ -1,8 +1,19 @@
+import { deleteComment } from '@context/store/actions/commentAction'
 import { Menu, Transition } from '@headlessui/react'
 import { DotsVerticalIcon, DuplicateIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline'
 import React, { Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const CommentMenu = ({ post, comment, auth, setOnEdit }) => {
+const CommentMenu = ({ post, comment, setOnEdit }) => {
+  const { auth } = useSelector((state) => state)
+  const dispatch = useDispatch()
+
+  const handleRemove = () => {
+    if (post.user._id === auth.user._id || comment.user._id === auth.user._id) {
+      dispatch(deleteComment({ post, auth, comment }))
+    }
+  }
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
@@ -32,7 +43,7 @@ const CommentMenu = ({ post, comment, auth, setOnEdit }) => {
                 active ? 'bg-gray-100' : '',
                 'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex '
               )}
-              // onClick={setOnEdit(false)}
+              onClick={handleRemove}
             >
               {' '}
               <TrashIcon className="w-6 h-6 mr-2 " />
@@ -81,6 +92,7 @@ const CommentMenu = ({ post, comment, auth, setOnEdit }) => {
                                 active ? 'bg-gray-100' : '',
                                 'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex'
                               )}
+                              onClick={handleRemove}
                             >
                               {' '}
                               <TrashIcon className="w-6 h-6 mr-2" />

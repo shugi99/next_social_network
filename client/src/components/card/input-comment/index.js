@@ -2,7 +2,7 @@ import { createComment } from '@context/store/actions/commentAction'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const InputComment = ({ children, post }) => {
+const InputComment = ({ children, post, onReply, setOnReply }) => {
   const [content, setContent] = useState('')
 
   const { auth } = useSelector((state) => state)
@@ -10,28 +10,37 @@ const InputComment = ({ children, post }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!content.trim()) return setContent('')
+    if (!content.trim()) {
+      if (setOnReply) return setOnReply(false)
+      return
+    }
+    setContent('')
     const newComment = {
       content,
       likes: [],
       user: auth.user,
       createdAt: new Date().toISOString(),
+      reply: onReply && onReply.commentId,
+      tag: onReply && onReply.user,
     }
 
     dispatch(createComment({ post, newComment, auth }))
+
+    if (setOnReply) return setOnReply(false)
   }
   return (
     <form className="flex items-center " onSubmit={handleSubmit}>
       {children}
       <input
-        className="flex-1 p-4 overflow-auto bg-gray-100 border-none outline-none"
+        className={`
+          ${onReply ? 'p-2' : 'bg-gray-100 p-4'} flex-1  overflow-auto  border-none outline-none`}
         value={content || ''}
         onChange={(e) => setContent(e.target.value)}
         type="text"
         placeholder="Add your comment.."
       />
 
-      <button type="submit" className="p-4 bg-gray-100 border-0 outline-none">
+      <button type="submit" className={`${onReply ? ' font-semibold' : ' bg-gray-100'} p-4 border-0 outline-none`}>
         Post
       </button>
     </form>
