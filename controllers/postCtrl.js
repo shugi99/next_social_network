@@ -4,6 +4,7 @@ const postCtrl = {
   createPost: async (req, res) => {
     try {
       const { content, images } = req.body
+      console.log(req.images)
       // if(images.length === 0 )
       // return res.status(400).json({msg: "Please add your photo"})
 
@@ -40,7 +41,6 @@ const postCtrl = {
     }
   },
   updatePost: async (req, res) => {
-    console.log('aw')
     try {
       const { content, images } = req.body
       const post = await Posts.findOneAndUpdate(
@@ -96,6 +96,14 @@ const postCtrl = {
       if (!like) return res.status(400).json({ msg: 'This post does not exist.' })
 
       res.json({ msg: 'UnLiked Post!' })
+    } catch (err) {
+      return res.status(500).json({ msg: err.message })
+    }
+  },
+  getUserPosts: async (req, res) => {
+    try {
+      const posts = await Posts.find({ user: req.params.id }).sort('-createdAt')
+      res.json({ posts, result: posts.length })
     } catch (err) {
       return res.status(500).json({ msg: err.message })
     }

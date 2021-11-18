@@ -7,6 +7,9 @@ router.route('/posts').post(auth, postCtrl.createPost).get(auth, postCtrl.getPos
 router.route('/post/:id').patch(auth, postCtrl.updatePost)
 
 router.patch('/post/:id/like', auth, postCtrl.likePost)
+
 router.patch('/post/:id/unlike', auth, postCtrl.unLikePost)
+
+router.get('/user_posts/:id', auth, postCtrl.getUserPosts)
 
 module.exports = router

@@ -9,7 +9,7 @@ const corsOptions = {
   credentials: true,
   origin: 'http://localhost:3000',
 }
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))
 app.use(cors(corsOptions))
 app.use(cookieParser())
 
@@ -18,7 +18,7 @@ app.use('/api', require('./routes/authRouter'))
 app.use('/api', require('./routes/userRouter'))
 app.use('/api', require('./routes/postRouter'))
 app.use('/api', require('./routes/commentRouter'))
-// app.use('/api', require('./routes/notifyRouter'))
+app.use('/api', require('./routes/uploadRouter'))
 // app.use('/api', require('./routes/messageRouter'))
 
 const URI = process.env.MONGODB_URL

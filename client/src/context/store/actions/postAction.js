@@ -16,31 +16,7 @@ export const createPost =
       dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
       let media = []
       if (images.length > 0) media = await imageUpload(images, auth.token)
-      // if (images.length > 0) media = await foo(images, auth.token)
 
-      // media = [
-      //   {
-      //     public_id: 'xcgvcqxykn66nxz4g1v4',
-      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
-      //   },
-      //   {
-      //     public_id: 'xcgvcqxykn66nxz4g1v4',
-      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
-      //   },
-      //   {
-      //     public_id: 'xcgvcqxykn66nxz4g1v4',
-      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
-      //   },
-      //   {
-      //     public_id: 'xcgvcqxykn66nxz4g1v4',
-      //     url: "https://res.cloudinary.com/dybmlbceb/image/upload/v1637165504/vyznjy9fviyfmyy2dzxi.jpg",
-      //   },
-      //   {
-      //     public_id: 'xcgvcqxykn66nxz4g1v4',
-      //     url: "https://res.cloudinary.com/dybmlbceb/image/upload/v1637165504/y8xmfjjzcpowwhwdbbmh.jpg",
-      //   },
-      // ]
-      console.log(media, 'media')
       const res = await postDataAPI('posts', { content, images: media }, auth.token)
 
       dispatch({ type: POST_TYPES.CREATE_POST, payload: res.data.newPost })
