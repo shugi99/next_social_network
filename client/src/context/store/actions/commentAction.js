@@ -74,7 +74,6 @@ export const deleteComment =
   ({ post, comment, auth }) =>
   async (dispatch) => {
     const deleteArr = [...post.comments.filter((cm) => cm.reply === comment._id), comment]
-    console.log(deleteArr)
 
     const newPost = {
       ...post,

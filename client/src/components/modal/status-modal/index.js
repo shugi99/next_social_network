@@ -100,6 +100,8 @@ const StatusModal = () => {
       setImages(status.images)
     }
   }, [])
+
+  const disabled = !content ? (images.length === 0 ? true : false) : false
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-full overflow-auto bg-indigo-100 bg-opacity-40 pt-60 ">
       <div className="relative p-4 px-6  w-full max-w-[450px] mx-auto font-medium text-gray-500 bg-white border-2 border-gray-200 shadow-md rounded-2xl">
@@ -170,10 +172,10 @@ const StatusModal = () => {
           <button
             type="submit"
             className={`${
-              content ? 'hover:bg-indigo-800 bg-indigo-700' : 'bg-gray-400'
+              disabled ? 'bg-gray-400' : 'hover:bg-indigo-800 bg-indigo-700'
             } w-full py-2 text-sm font-medium text-white  border border-transparent rounded-md shadow-sm py-my-2 px-22 flex-grow-1  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             onClick={handleSubmit}
-            disabled={content ? false : true}
+            disabled={disabled}
           >
             Post
           </button>

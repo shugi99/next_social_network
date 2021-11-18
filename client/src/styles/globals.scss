@@ -3,6 +3,10 @@
 @import 'tailwindcss/utilities';
 
 @import './components.scss';
+@import './slick.scss';
+@import './slick-theme.scss';
+
+
 html,
 body {
   padding: 0;
@@ -33,3 +37,20 @@ min-height: 100%;
 
 
 ::-webkit-file-upload-button { cursor:pointer; }
+
+.arrow--hide {
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.arrow--hide:hover {
+  opacity: 1;
+}
+
+.animate--button {
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+.animate--button:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

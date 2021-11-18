@@ -10,28 +10,22 @@ import Follow from './follow'
 import Followers from './followers'
 import Following from './following'
 
-const Info = () => {
-  const { auth, profile } = useSelector((state) => state)
-  const dispatch = useDispatch()
-  const router = useRouter()
-
+const Info = ({ id, auth, profile, dispatch }) => {
   const [userData, setUserData] = useState([])
   const [onEdit, setOnEdit] = useState(false)
 
   const [showFollowers, setShowFollowers] = useState(false)
   const [showFollowing, setShowFollowing] = useState(false)
 
-  const id = router.query.id
-
   useEffect(() => {
-    if (id === auth?.user._id) {
+    if (id === auth.user._id) {
       setUserData([auth.user])
     } else {
-      dispatch(getProfileUsers({ users: profile.users, id, auth }))
+      // dispatch(getProfileUsers({ users: profile.users, id, auth }))
       const newData = profile.users.filter((user) => user._id === id)
       setUserData(newData)
     }
-  }, [id, auth.user, profile.users])
+  }, [id, auth.user, auth.user.avatar, profile.users])
 
   useEffect(() => {
     if (showFollowers || showFollowing || onEdit) {

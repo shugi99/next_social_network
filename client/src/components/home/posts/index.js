@@ -10,7 +10,7 @@ const index = () => {
 
   useEffect(() => {
     if (auth.token) dispatch(getPosts(auth.token))
-  }, [dispatch, auth.token, homePosts])
+  }, [dispatch, auth.token])
 
   return (
     <div>

@@ -1,12 +1,8 @@
 // import Slider from '@components/slider'
 import React, { useState } from 'react'
+import Carousel from './carousel'
 
 const CardBody = ({ post }) => {
-  //   const post = {
-  //     content:
-  //       '123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a123456789012345678901234567890123456789012345678901234567890a',
-  //   }
-
   const data = [{ name: 'post' }, { name: 'post' }, { name: 'post' }]
   const [readMore, setReadMore] = useState(false)
   return (
@@ -18,7 +14,8 @@ const CardBody = ({ post }) => {
         <div onClick={() => setReadMore(!readMore)}>{readMore ? 'Hide content' : 'Read More'}</div>
       )}
 
-      {/* {post.images.length > 0 && <Carousel />} */}
+      {post.images.length > 0 && <Carousel images={post.images} id={post._id} />}
+
       {/* <Slider dots={true} largeCount={4} smallCount={2}>
         {data.map((post) => (
           <div>1</div>

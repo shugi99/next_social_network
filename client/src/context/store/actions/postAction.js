@@ -1,6 +1,6 @@
 import { GLOBALTYPES } from './globalTypes'
 import { getDataAPI, patchDataAPI, postDataAPI } from '@utils/fetchData'
-import { imageUpload } from '@utils/imageUpload'
+import { foo, imageUpload } from '@utils/imageUpload'
 
 export const POST_TYPES = {
   CREATE_POST: 'CREATE_POST',
@@ -14,9 +14,34 @@ export const createPost =
   async (dispatch) => {
     try {
       dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-      //   if(images.length > 0) media =await imageUpload(images)
+      let media = []
+      if (images.length > 0) media = await imageUpload(images, auth.token)
+      // if (images.length > 0) media = await foo(images, auth.token)
 
-      const res = await postDataAPI('posts', { content, images: [] }, auth.token)
+      // media = [
+      //   {
+      //     public_id: 'xcgvcqxykn66nxz4g1v4',
+      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
+      //   },
+      //   {
+      //     public_id: 'xcgvcqxykn66nxz4g1v4',
+      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
+      //   },
+      //   {
+      //     public_id: 'xcgvcqxykn66nxz4g1v4',
+      //     url: '"https://res.cloudinary.com/dybmlbceb/image/upload/v1637165411/q1jdpzpuulzy9rmics2c.jpg"',
+      //   },
+      //   {
+      //     public_id: 'xcgvcqxykn66nxz4g1v4',
+      //     url: "https://res.cloudinary.com/dybmlbceb/image/upload/v1637165504/vyznjy9fviyfmyy2dzxi.jpg",
+      //   },
+      //   {
+      //     public_id: 'xcgvcqxykn66nxz4g1v4',
+      //     url: "https://res.cloudinary.com/dybmlbceb/image/upload/v1637165504/y8xmfjjzcpowwhwdbbmh.jpg",
+      //   },
+      // ]
+      console.log(media, 'media')
+      const res = await postDataAPI('posts', { content, images: media }, auth.token)
 
       dispatch({ type: POST_TYPES.CREATE_POST, payload: res.data.newPost })
 
@@ -26,6 +51,7 @@ export const createPost =
         type: GLOBALTYPES.ALERT,
         payload: { error: err.response.data.msg },
       })
+      console.log(err)
     }
   }
 
@@ -55,8 +81,8 @@ export const updatePost =
     if (status.content === content && imgNewUrl.length === 0 && imgOldUrl.length === status.images.length) return
     try {
       dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } })
-      //   if(images.length > 0) media =await imageUpload(images)
-      console.log('res')
+
+      if (images.length > 0) media = await imageUpload(images)
 
       const res = await patchDataAPI(
         `post/${status._id}`,
@@ -68,7 +94,6 @@ export const updatePost =
       )
 
       dispatch({ type: POST_TYPES.UPDATE_POST, payload: { ...res.data.newPost, user: auth.user } })
-      console.log(res)
 
       dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } })
     } catch (err) {
