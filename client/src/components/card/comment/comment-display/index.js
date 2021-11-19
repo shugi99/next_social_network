@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import CommentCard from '../comment-card'
+import { useRouter } from 'next/router'
 
 const CommentDisplay = ({ comment, post, replyCm }) => {
   const [showRep, setShowRep] = useState([])

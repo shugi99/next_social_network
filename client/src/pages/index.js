@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from '@components/home'
 import { Footer } from '@components/footer'
+import Modal from '@components/modal'
 
 const index = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { LockClosedIcon } from '@heroicons/react/solid'
@@ -23,6 +23,11 @@ export default function Login() {
     e.preventDefault()
     dispatch(login(userData))
   }
+  useEffect(() => {
+    if (auth.token) {
+      router.push('/')
+    }
+  }, [auth.token])
 
   const [typePass, setTypePass] = useState(false)
   return (

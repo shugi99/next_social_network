@@ -9,10 +9,12 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     if (!auth.token) {
       router.push('/login')
+      console.log('bakit')
     }
+    console.log(auth.token)
   }, [auth.token])
 
-  return <div>{children}</div>
+  return <div>{auth.token && children}</div>
 }
 
 export default ProtectedRoute

@@ -3,10 +3,12 @@ import Posts from '@components/home/posts/posts'
 import { getPosts } from '@context/store/actions/postAction'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 const index = () => {
   const { auth, homePosts } = useSelector((state) => state)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   useEffect(() => {
     if (auth.token) dispatch(getPosts(auth.token))

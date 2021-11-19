@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 
 router.route('/posts').post(auth, postCtrl.createPost).get(auth, postCtrl.getPosts)
 
-router.route('/post/:id').patch(auth, postCtrl.updatePost)
+router.route('/post/:id').patch(auth, postCtrl.updatePost).get(auth, postCtrl.getPost)
 
 router.patch('/post/:id/like', auth, postCtrl.likePost)
 

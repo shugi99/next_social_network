@@ -12,6 +12,7 @@ const CardHeader = ({ post }) => {
   const dispatch = useDispatch()
 
   const handleEditPost = () => {
+    console.log('watafsa')
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })
   }
 

@@ -15,14 +15,20 @@ const Profile = () => {
 
   useEffect(() => {
     if (profile.ids.every((item) => item !== id)) {
-      dispatch(getProfileUsers({ users: profile.users, id, auth }))
+      dispatch(getProfileUsers({ id, auth }))
     }
-  }, [id, profile.user, auth])
+  }, [id, auth, dispatch, profile.ids])
 
   return (
     <div>
-      {profile.loading ? <Loading /> : <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />}
-      <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />
+      <Info auth={auth} profile={profile} dispatch={dispatch} id={id} />
+      {profile.loading ? (
+        <div className="">
+          <Loading />
+        </div>
+      ) : (
+        <Posts auth={auth} profile={profile} dispatch={dispatch} id={id} />
+      )}
     </div>
   )
 }

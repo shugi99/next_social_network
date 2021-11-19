@@ -36,6 +36,10 @@ min-height: 100%;
 }
 
 
+img {
+  object-fit: cover;
+}
+
 ::-webkit-file-upload-button { cursor:pointer; }
 
 .arrow--hide {

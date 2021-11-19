@@ -4,6 +4,7 @@ import '../styles/globals.scss'
 import DataProvider from '@context/store/store'
 import Alert from '@components/alert'
 import Init from '@components/init'
+import Modal from '@components/modal'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
 
       <Layout>
         <Init>
+          <Modal />
           <Alert />
           <Component {...pageProps} />
         </Init>

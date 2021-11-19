@@ -1,6 +1,7 @@
 import CardBody from '@components/card/body'
 import CardFooter from '@components/card/footer'
 import CardHeader from '@components/card/header'
+import { useSelector } from 'react-redux'
 
 const PostCard = ({ post }) => {
   const { homePosts } = useSelector((state) => state)

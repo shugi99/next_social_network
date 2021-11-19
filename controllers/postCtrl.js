@@ -49,7 +49,9 @@ const postCtrl = {
           content,
           images,
         }
-      ).populate('user likes', 'avatar username fullname')
+      )
+        .populate('user likes', 'avatar username fullname')
+        .populate({ path: 'comments', populate: { path: 'user likes', select: '-password' } })
 
       res.json({
         msg: 'Post updated',
@@ -107,6 +109,23 @@ const postCtrl = {
     } catch (err) {
       return res.status(500).json({ msg: err.message })
     }
+  },
+  getPost: async (req, res) => {
+    try {
+      const post = await Posts.findById(req.params.id)
+        .populate('user likes', 'avatar username fullname')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user likes',
+            select: '-password',
+          },
+        })
+
+      res.json({
+        post,
+      })
+    } catch (error) {}
   },
 }
 

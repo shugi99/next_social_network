@@ -121,7 +121,7 @@ const StatusModal = () => {
               images.map((img, index) => (
                 <div key={index} id="file_img" className="relative w-1/3 p-1 h-28 border-1 ">
                   <img
-                    src={img.camera ? img.camera : images.url ? img.url : URL.createObjectURL(img)}
+                    src={img.camera ? img.camera : images.url ? img.url : img.url}
                     alt="images"
                     className="block object-cover w-full h-full"
                   />
