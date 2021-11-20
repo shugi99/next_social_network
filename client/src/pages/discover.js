@@ -1,3 +1,4 @@
+import Discover from '@components/discover'
 import Header from '@components/header'
 import Dropdown from '@components/header/dropdown'
 import ProtectedRoute from '@components/protected'
@@ -14,7 +15,7 @@ const index = () => {
   return (
     <ProtectedRoute>
       <Header />
-      <div>Hey</div>
+      <Discover />
     </ProtectedRoute>
   )
 }

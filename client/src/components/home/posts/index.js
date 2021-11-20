@@ -16,6 +16,7 @@ const index = () => {
 
   return (
     <div>
+      {console.log(homePosts)}
       {homePosts.loading ? (
         <Loading />
       ) : homePosts.result === 0 ? (

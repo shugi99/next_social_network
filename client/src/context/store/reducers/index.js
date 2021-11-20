@@ -6,6 +6,7 @@ import status from './statusReducer'
 import homePosts from './postReducer'
 import modal from './modalReducer'
 import detailPost from './detailPostReducer'
+import discover from './discoverReducer'
 
 const reducer = combineReducers({
   auth,
@@ -15,5 +16,6 @@ const reducer = combineReducers({
   homePosts,
   modal,
   detailPost,
+  discover,
 })
 export default reducer

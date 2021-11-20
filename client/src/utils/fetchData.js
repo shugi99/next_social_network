@@ -16,7 +16,6 @@ export const getDataAPI = async (url, token) => {
 }
 
 export const postDataAPI = async (url, post, token) => {
-  console.log(post, 'post')
   const res = await api.post(`${url}`, post, {
     headers: { Authorization: token },
   })

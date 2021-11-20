@@ -16,9 +16,7 @@ const Init = ({ children }) => {
   useEffect(() => {
     if (!auth.token) {
       router.push('/login')
-      console.log('bakit')
     }
-    console.log(auth.token, 'token')
   }, [auth.token])
 
   return (

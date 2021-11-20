@@ -45,7 +45,6 @@ const Info = ({ id, auth, profile, dispatch }) => {
               <div className="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                 <div className="flex">
                   <Avatar src={user.avatar} className="w-24 h-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32" />
-                  {console.log(userData)}
                 </div>
                 <div className="mt-6 sm:flex-1 sm:min-w-0 sm:flex sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                   <div className="flex-1 min-w-0 mt-6 sm:hidden 2xl:block">
