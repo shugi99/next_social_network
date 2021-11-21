@@ -40,7 +40,7 @@ const InputComment = ({ children, post, onReply, setOnReply }) => {
         placeholder="Add your comment.."
       />
 
-      <button type="submit" className={`${onReply ? ' font-semibold' : ' bg-gray-100'} p-4 border-0 outline-none`}>
+      <button type="submit" className={`${onReply ? ' ' : ' bg-gray-100'} font-semibold p-4 border-0 outline-none`}>
         Post
       </button>
     </form>

@@ -4,10 +4,14 @@ import Link from 'next/link'
 import Like from '@components/like'
 import { useDispatch, useSelector } from 'react-redux'
 import { likePost, unLikePost } from '@context/store/actions/postAction'
+import ShareModal from './share-modal'
+import { BASE_URL } from '@helpers/config'
 
 const CardFooter = ({ post }) => {
   const [like, setLike] = useState(false)
   const [loadLike, setLoadLike] = useState(false)
+
+  const [isShare, setIsShare] = useState(false)
 
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -44,7 +48,7 @@ const CardFooter = ({ post }) => {
               <ChatIcon className="w-6 h-6" />
             </a>
           </Link>
-          <PaperAirplaneIcon className="w-6 h-6" />
+          <PaperAirplaneIcon className="w-6 h-6 cursor-pointer" onClick={() => setIsShare(!isShare)} />
         </div>
         <BookmarkIcon className="w-6 h-6" />
       </div>
@@ -52,6 +56,7 @@ const CardFooter = ({ post }) => {
         <h6 className="cursor-pointer">{post.likes.length} likes</h6>
         <h6 className="cursor-pointer">{post.comments.length} comments</h6>
       </div>
+      {isShare && <ShareModal url={`${BASE_URL}/post/${post._id}`} />}
     </div>
   )
 }

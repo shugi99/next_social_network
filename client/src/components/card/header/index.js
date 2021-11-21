@@ -6,14 +6,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Menu, Transition } from '@headlessui/react'
 import { DotsHorizontalIcon, DuplicateIcon, PencilIcon, TrashIcon } from '@heroicons/react/outline'
 import { GLOBALTYPES } from '@context/store/actions/globalTypes'
+import { deletePost } from '@context/store/actions/postAction'
+import { useRouter } from 'next/router'
+import { BASE_URL } from '@utils/config'
 
 const CardHeader = ({ post }) => {
   console.log(post)
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const handleEditPost = () => {
     dispatch({ type: GLOBALTYPES.STATUS, payload: { ...post, onEdit: true } })
+  }
+
+  const handleDeletePost = () => {
+    if (window.confirm('Delete this post')) {
+      dispatch(deletePost({ post, auth }))
+      router.push('/')
+    }
+  }
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(`${BASE_URL}/post/${post._id}`)
   }
 
   function classNames(...classes) {
@@ -84,6 +98,7 @@ const CardHeader = ({ post }) => {
                               active ? 'bg-gray-100' : '',
                               'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex '
                             )}
+                            onClick={handleDeletePost}
                           >
                             {' '}
                             <TrashIcon className="w-6 h-6 mr-2 " />
@@ -94,20 +109,21 @@ const CardHeader = ({ post }) => {
                     </div>
                   )}
 
-                  <Menu.Item>
+                  {/* <Menu.Item>
                     {({ active }) => (
                       <span
                         className={classNames(
                           active ? 'bg-gray-100' : '',
                           'hover:bg-gray-100 px-4 py-2 text-sm text-gray-700 flex'
                         )}
+                        onClick={handleCopyLink}
                       >
                         {' '}
                         <DuplicateIcon className="w-6 h-6 mr-2" />
                         Copy Link
                       </span>
                     )}
-                  </Menu.Item>
+                  </Menu.Item> */}
                 </Menu.Items>
               </Transition>
             </>

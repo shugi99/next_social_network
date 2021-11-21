@@ -15,3 +15,5 @@ export const header_sub_menu = [
   { caption: 'Settings', url: '/settings' },
   { caption: 'Logout', url: '/api/auth/logout' },
 ]
+
+export const BASE_URL = 'http://localhost:3000'

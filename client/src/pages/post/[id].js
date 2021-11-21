@@ -1,12 +1,10 @@
 import Header from '@components/header'
-import Post from '@components/post'
 import ProtectedRoute from '@components/protected'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPost } from '@context/store/actions/postAction'
 import Loading from '@components/alert/loading'
-import PostCard from '@components/post-card'
 import Card from '@components/card'
 
 const index = () => {
@@ -29,7 +27,6 @@ const index = () => {
     // <ProtectedRoute>
     <>
       <Header />
-      {/* <Post /> */}
       <div className="post">
         {post.length === 0 && <Loading />}
         <div className="px-2 mx-auto max-w-7xl sm:px-4 lg:px-8 mt-28">

@@ -1,4 +1,5 @@
 const Posts = require('../models/postModel')
+const Comments = require('../models/commentModel')
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -149,6 +150,7 @@ const postCtrl = {
             select: '-password',
           },
         })
+      if (!post) return res.status(400).json({ msg: 'This post does not exist.' })
 
       res.json({
         post,
@@ -173,6 +175,14 @@ const postCtrl = {
         result: posts.length,
       })
     } catch (error) {}
+  },
+  deletePost: async (req, res) => {
+    try {
+      const post = await Posts.findOneAndDelete({ _id: req.params.id, user: req.user._id })
+      await Comments.deleteMany({ _id: { $in: post.comments } })
+    } catch (error) {
+      return res.status(500).json({ msg: err.message })
+    }
   },
 }
 

@@ -21,7 +21,7 @@ const Comments = ({ post }) => {
   }, [post.comments])
 
   return (
-    <div className="p-4">
+    <div className="p-2 px-4">
       {showComments.map((comment) => (
         <CommentDisplay
           key={comment._id}

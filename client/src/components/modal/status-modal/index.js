@@ -126,7 +126,7 @@ const StatusModal = () => {
                     className="block object-cover w-full h-full"
                   />
                   <XIcon
-                    className="absolute inset-y-0 right-0 flex items-center w-8 h-8 p-2 text-red-500 bg-red-100 rounded-full cursor-pointer top-2"
+                    className="absolute inset-y-0 right-0 flex items-center w-8 h-8 p-2 text-red-500 rounded-full cursor-pointer top-2"
                     aria-hidden="true"
                     onClick={() => deleteImages(index)}
                   />
@@ -137,7 +137,7 @@ const StatusModal = () => {
             <div className="relative">
               <video autoPlay muted ref={videoRef} />
               <XIcon
-                className="absolute inset-y-0 flex items-center w-8 h-8 p-2 text-red-500 bg-red-100 rounded-full cursor-pointer right-2 top-2"
+                className="absolute inset-y-0 flex items-center w-8 h-8 p-2 text-red-500 rounded-full cursor-pointer right-2 top-2"
                 aria-hidden="true"
                 onClick={handleStopStream}
               />
