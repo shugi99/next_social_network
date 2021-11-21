@@ -69,7 +69,7 @@ const Search = () => {
             </div>
           )}
           <div className="absolute w-full mt-2 overflow-auto">
-            <div className="flex flex-col">
+            <div className="flex flex-col bg-white">
               {search &&
                 users.map((user) => (
                   <Link key={user._id} href={`/profile/${user._id}`}>

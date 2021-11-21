@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import { BASE_URL } from '@utils/config'
 
 const CardHeader = ({ post }) => {
-  console.log(post)
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
   const router = useRouter()

@@ -8,7 +8,7 @@ const Following = ({ users, setShowFollowing }) => {
   const { auth } = useSelector((state) => state)
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-screen bg-white bg-opacity-80">
-      <div className="w-[350px] h-[400px] border-2 border-gray-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto p-5">
+      <div className="w-[350px] h-[400px] border-2 border-gray-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-auto p-5 bg-white">
         <h5 className="p-2 text-lg font-semibold text-gray-900 truncate">Following</h5>
         {users.map((user) => (
           <UserCard key={user._id} user={user} setShowFollowing={setShowFollowing}>

@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 
 const UserCard = ({ children, user, border, handleClose, setShowFollowers, setShowFollowing }) => {
+  console.log(user)
   const handleCloseAll = () => {
     if (handleClose) handleClose()
     if (setShowFollowers) setShowFollowers(false)

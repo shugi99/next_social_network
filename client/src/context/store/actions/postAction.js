@@ -29,7 +29,6 @@ export const createPost =
         type: GLOBALTYPES.ALERT,
         payload: { error: err.response.data.msg },
       })
-      console.log(err)
     }
   }
 export const getPosts = (token) => async (dispatch) => {
