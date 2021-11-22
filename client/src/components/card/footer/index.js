@@ -1,11 +1,12 @@
-import { BookmarkIcon, ChatIcon, HeartIcon, PaperAirplaneIcon } from '@heroicons/react/outline'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Like from '@components/like'
 import { useDispatch, useSelector } from 'react-redux'
-import { likePost, unLikePost } from '@context/store/actions/postAction'
-import ShareModal from './share-modal'
+import { likePost, savePost, unLikePost, unSavePost } from '@context/store/actions/postAction'
 import { BASE_URL } from '@helpers/config'
+import { BookmarkIcon, ChatIcon, PaperAirplaneIcon } from '@heroicons/react/outline'
+import { BookmarkIcon as BookmarkIconSolid } from '@heroicons/react/solid'
+import ShareModal from './share-modal'
+import Like from '@components/like'
 
 const CardFooter = ({ post }) => {
   const [like, setLike] = useState(false)
@@ -16,9 +17,14 @@ const CardFooter = ({ post }) => {
   const { auth } = useSelector((state) => state)
   const dispatch = useDispatch()
 
+  const [saved, setSaved] = useState(false)
+  const [saveLoad, setSaveLoad] = useState(false)
+
   useEffect(() => {
     if (post.likes.find((like) => like._id === auth.user._id)) {
       setLike(true)
+    } else {
+      setLike(false)
     }
   }, [post.like, auth.user._id])
 
@@ -38,6 +44,31 @@ const CardFooter = ({ post }) => {
     setLoadLike(false)
   }
 
+  // Saved
+  useEffect(() => {
+    if (auth.user.saved.find((id) => id === post._id)) {
+      setSaved(true)
+    } else {
+      setSaved(false)
+    }
+  }, [auth.user.saved, post._id])
+
+  const handleSavePost = async () => {
+    if (saveLoad) return
+
+    setSaveLoad(true)
+    await dispatch(savePost({ post, auth }))
+    setSaveLoad(false)
+  }
+
+  const handleUnSavePost = async () => {
+    if (saveLoad) return
+
+    setSaveLoad(true)
+    await dispatch(unSavePost({ post, auth }))
+    setSaveLoad(false)
+  }
+
   return (
     <div className="px-4 pt-4">
       <div className="flex justify-between w-full ">
@@ -50,7 +81,14 @@ const CardFooter = ({ post }) => {
           </Link>
           <PaperAirplaneIcon className="w-6 h-6 cursor-pointer" onClick={() => setIsShare(!isShare)} />
         </div>
-        <BookmarkIcon className="w-6 h-6" />
+
+        {post.images.length === 0 ? (
+          ''
+        ) : saved ? (
+          <BookmarkIconSolid className="w-6 h-6 text-green-800 cursor-pointer" onClick={handleUnSavePost} />
+        ) : (
+          <BookmarkIcon className="w-6 h-6 cursor-pointer" onClick={handleSavePost} />
+        )}
       </div>
       <div className="flex justify-between pt-2">
         <h6 className="cursor-pointer">{post.likes.length} likes</h6>

@@ -11,9 +11,6 @@ const SideBar = () => {
   const dispatch = useDispatch()
   return (
     <div className="p-2 mt-6 ml-6 font-medium text-gray-500 border-2 border-gray-200 shadow-md h-[750px] rounded-2xl">
-      {/* <div className="p-4 pb-0">
-        <UserCard user={auth.user} />
-      </div> */}
       <div className="flex items-center justify-center pt-4">
         <h5>User suggestions</h5>
         {!suggestions.loading && (
@@ -26,7 +23,7 @@ const SideBar = () => {
       {suggestions.loading ? (
         <div className="flex items-center justify-center p-4">loading</div>
       ) : (
-        <div className="p-4">
+        <div className="p-4 h-[650px]">
           {suggestions.users &&
             suggestions.users.map((user) => (
               <div key={user._id}>
